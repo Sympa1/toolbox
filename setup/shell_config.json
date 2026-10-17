@@ -2,15 +2,15 @@
   "posix_aliases": [
     "alias gemini-update=\"sudo npm update -g @google/gemini-cli\"",
     "alias gu=\"sudo npm update -g @google/gemini-cli\"",
-    "alias putzputz=\"python3 ~/Dev/linux-toolbox/cli/appimage_mover.py\"",
-    "alias apps=\"python3 ~/Dev/linux-toolbox/setup/app_installer.py\"",
+    "alias putzputz=\"python3 ~/Dev/toolbox/cli/appimage_mover.py\"",
+    "alias apps=\"python3 ~/Dev/toolbox/setup/app_installer.py\"",
     "alias lg=\"lazygit\""
   ],
   "fish_aliases": [
     "alias gemini-update \"sudo npm update -g @google/gemini-cli\"",
     "alias gu \"sudo npm update -g @google/gemini-cli\"",
-    "alias putzputz \"python3 ~/Dev/linux-toolbox/cli/appimage_mover.py\"",
-    "alias apps \"python3 ~/Dev/linux-toolbox/setup/app_installer.py\"",
+    "alias putzputz \"python3 ~/Dev/toolbox/cli/appimage_mover.py\"",
+    "alias apps \"python3 ~/Dev/toolbox/setup/app_installer.py\"",
     "alias lg \"lazygit\""
   ]
 }

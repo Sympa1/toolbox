@@ -1,5 +1,5 @@
 # ==============================================================================
-# Beispieldatei fuer Softwarepakete (sample.applist)
+# Paketliste fuer Desktop & Workstation (workstation.applist)
 # ==============================================================================
 # HINWEIS ZUR PAKETMANAGER-AUSWAHL:
 # - type=pacman : Installiert Pakete explizit ueber 'sudo pacman' (offizielle Arch-Repos)

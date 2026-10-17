@@ -1,4 +1,4 @@
-# linux-toolbox
+# toolbox
 
 Strukturierte Sammlung modularer Automatisierungs-, Setup- und Hilfswerkzeuge für Linux (Server & Clients).
 
@@ -8,43 +8,44 @@ Strukturierte Sammlung modularer Automatisierungs-, Setup- und Hilfswerkzeuge f�
 
 - [Projektübersicht](#projektübersicht)
 - [Verzeichnisstruktur](#verzeichnisstruktur)
+- [System-Setup (`setup/`)](#system-setup-setup)
+  - [App Installer (`setup/app_installer.py`)](#app-installer-setupapp_installerpy)
+  - [Workstation-Setup (`setup/setup.py`)](#workstation-setup-setupsetuppy)
+  - [App-Listen (`setup/applists/`)](#app-listen-setupapplists)
 - [CLI-Tools (`cli/`)](#cli-tools-cli)
   - [AppImage Mover (`cli/appimage_mover.py`)](#appimage-mover-cliappimage_moverpy)
 - [Dienste & Cronjobs (`services/`)](#dienste--cronjobs-services)
   - [Backup & Restore (`services/backup/`)](#backup--restore-servicesbackup)
   - [KDE Wallpaper Changer (`services/wallpaper/`)](#kde-wallpaper-changer-serviceswallpaper)
-- [System-Setup (`setup/`)](#system-setup-setup)
-  - [App Installer (`setup/app_installer.py`)](#app-installer-setupapp_installerpy)
-  - [Workstation-Setup (`setup/setup.py`)](#workstation-setup-setupsetuppy)
-  - [App-Listen (`setup/applists/`)](#app-listen-setupapplists)
 - [Dokumentation (`docs/`)](#dokumentation-docs)
 
 ---
 
+<a id="projektübersicht"></a>
 ## Projektübersicht
 
 Dieses Repository bündelt Werkzeuge für die Systemadministration, Desktop-Einrichtung und Server-Wartung in einer sauberen, modularen Architektur:
-* **`setup/`**: Provisioning, App-Installer und Paketlisten für die Ersteinrichtung von Rechnern.
-* **`cli/`**: Interaktive Werkzeuge für den alltäglichen Aufruf im Terminal.
-* **`services/`**: Hintergrunddienste, Daemons und unbeaufsichtigte Cronjobs.
-* **`docs/`**: Detaillierte Anleitungen und Dokumentationen.
+* **[`setup/`](setup/)**: Provisioning, App-Installer und Paketlisten für die Ersteinrichtung von Rechnern.
+* **[`cli/`](cli/)**: Interaktive Werkzeuge für den alltäglichen Aufruf im Terminal.
+* **[`services/`](services/)**: Hintergrunddienste, Daemons und unbeaufsichtigte Cronjobs.
+* **[`docs/`](docs/)**: Detaillierte Anleitungen und Dokumentationen.
 
 ---
 
+<a id="verzeichnisstruktur"></a>
 ## Verzeichnisstruktur
 
 ```text
 .
 ├── README.md                      # Gesamtübersicht des Repositories
+├── AGENTS.md                      # Projekt-Harness & Entwicklungsrichtlinien
 ├── setup/                         # Systemeinrichtung & Provisioning
 │   ├── app_installer.py           # Paket-Installer und Statusprüfer
 │   ├── setup.py                   # Vollautomatisches Workstation Setup
 │   ├── shell_configurator.py      # Idempotenter Shell-Alias-Manager
 │   ├── shell_config.json          # Alias- und Shell-Konfigurationsdaten
 │   └── applists/                  # Paketlisten (*.applist)
-│       ├── workstation.applist    # Basis-Tools für Workstation
-│       ├── sample.applist
-│       └── sample_desktop_arch.applist
+│       └── workstation.applist    # Basis- und Beispiel-Paketliste für Workstations
 ├── cli/                           # Interaktive Werkzeuge für das Terminal
 │   └── appimage_mover.py          # AppImage-Aufräum- und Bereinigungsskript
 ├── services/                      # Hintergrunddienste & Cronjobs
@@ -61,15 +62,18 @@ Dieses Repository bündelt Werkzeuge für die Systemadministration, Desktop-Einr
 │       ├── kde-wallpaper-changer.service # systemd-Benutzerdienst-Vorlage
 │       ├── setup_service.sh       # Installations- & Steuerungsskript
 │       └── README.md              # Detaillierte Dokumentation
-└── docs/                          # Vertiefende Anleitungen
-    └── ANLEITUNG_APP_INSTALLER.md # Ausführliches Handbuch für app_installer.py
+└── docs/                          # Vertiefende Anleitungen & Projekt-Journal
+    ├── ANLEITUNG_APP_INSTALLER.md # Ausführliches Handbuch für app_installer.py
+    └── JOURNAL.md                 # Chronologisches Projekt-Journal
 ```
 
 ---
 
+<a id="system-setup-setup"></a>
 ## System-Setup (`setup/`)
 
-### App Installer (`setup/app_installer.py`)
+<a id="app-installer-setupapp_installerpy"></a>
+### App Installer ([`setup/app_installer.py`](setup/app_installer.py))
 
 Modulares Python-Werkzeug zur Batch-Überprüfung und Installation von Softwarepaketen anhand frei definierbarer `*.applist`-Dateien.
 
@@ -86,10 +90,10 @@ Modulares Python-Werkzeug zur Batch-Überprüfung und Installation von Softwarep
 python3 setup/app_installer.py
 
 # Pakete einer Liste prüfen
-python3 setup/app_installer.py check sample.applist
+python3 setup/app_installer.py check workstation.applist
 
 # Fehlende Pakete installieren
-python3 setup/app_installer.py install sample.applist
+python3 setup/app_installer.py install workstation.applist
 
 # Alle vorhandenen Listen abarbeiten
 python3 setup/app_installer.py check all
@@ -98,45 +102,51 @@ python3 setup/app_installer.py install all
 
 *Ausführliche Anleitung:* [docs/ANLEITUNG_APP_INSTALLER.md](docs/ANLEITUNG_APP_INSTALLER.md)
 
-### Workstation-Setup (`setup/setup.py`)
+<a id="workstation-setup-setupsetuppy"></a>
+### Workstation-Setup ([`setup/setup.py`](setup/setup.py))
 Interaktive Ersteinrichtung eines Arbeitsplatzsystems (z. B. CachyOS / Arch / Manjaro Linux):
-1. **Systempakete**: Automatische Installation der Basis-Tools via `app_installer.py` und `workstation.applist`.
+1. **Systempakete**: Automatische Installation der Basis-Tools via [`app_installer.py`](setup/app_installer.py) und [`workstation.applist`](setup/applists/workstation.applist).
 2. **Git & GitHub SSH**: Konfiguration von Git-Name/-E-Mail, Generierung eines dedizierten Ed25519-Schlüssels (`~/.ssh/github`), automatisches Kopieren in die Zwischenablage und bequeme Verknüpfung via GitHub-Web-Interface oder Token.
 3. **Remote-Server SSH & Aliase**: Interaktives Hinzufügen von Remote-Servern mit servereigenem SSH-Schlüssel (`~/.ssh/<servername>`), automatischer Public-Key-Übertragung (`ssh-copy-id`), `~/.ssh/config`-Eintrag und direktem Shell-Alias.
 4. **Antigravity CLI**: Automatische Installation / Aktualisierung der Google Antigravity CLI (`agy`).
-5. **Shell-Aliase**: Zentrale Pflege von Shell-Aliasen für Fish, Bash und Zsh über `shell_configurator.py` und `shell_config.json`.
+5. **Shell-Aliase**: Zentrale Pflege von Shell-Aliasen für Fish, Bash und Zsh über [`shell_configurator.py`](setup/shell_configurator.py) und [`shell_config.json`](setup/shell_config.json).
 
-### App-Listen (`setup/applists/`)
-Enthält Vorlagen für Software-Installationen:
-* [workstation.applist](setup/applists/workstation.applist): Basis-Systemwerkzeuge für Desktop & Terminal (z. B. `wl-clipboard`, `sshpass`, `git`, `curl`).
-* [sample.applist](setup/applists/sample.applist): Zeigt gemischte Installationen von `pacman` und `flatpak`.
-* [sample_desktop_arch.applist](setup/applists/sample_desktop_arch.applist): Umfassende Paketliste für Arch-Desktop-Systeme.
+<a id="app-listen-setupapplists"></a>
+### App-Listen ([`setup/applists/`](setup/applists/))
+Enthält deklarative Paketlisten für Software-Installationen:
+* [`workstation.applist`](setup/applists/workstation.applist): Basis- und Beispiel-Paketliste für Desktop & Workstation (kombinierte Installation über `pacman` und `flatpak`).
 
 ---
 
+<a id="cli-tools-cli"></a>
 ## CLI-Tools (`cli/`)
 
-### AppImage Mover (`cli/appimage_mover.py`)
+<a id="appimage-mover-cliappimage_moverpy"></a>
+### AppImage Mover ([`cli/appimage_mover.py`](cli/appimage_mover.py))
 
-Durchsucht `~/Downloads` nach `.AppImage`-Dateien, entfernt Versionsnummern und unschöne Sonderzeichen aus dem Dateinamen, verschiebt die Dateien nach `~/software` und setzt die Ausführungsrechte (`chmod +x`).
+Durchsucht `~/Downloads` nach `.AppImage`-Dateien, entfernt Versionsnummern und unschöne Sonderzeichen aus dem Dateinamen, verschiebt die Dateien nach `~/software` und setzt die Ausführungsrechte (`chmod 0o755`).
 
 ---
 
+<a id="dienste--cronjobs-services"></a>
 ## Dienste & Cronjobs (`services/`)
 
-### Backup & Restore (`services/backup/`)
+<a id="backup--restore-servicesbackup"></a>
+### Backup & Restore ([`services/backup/`](services/backup/))
 
 Ein vollständiges Sicherungssystem für Debian- und Linux-Server:
-* **Konsistente Datensicherung**: Sichert Anwendungsdaten, Portainer-Volumes und MariaDB-Datenbankdumps.
+* **Konsistente Datensicherung**: Sichert Anwendungsdaten, Portainer-Volumes und MariaDB-Datenbankdumps über [`backup-server.py`](services/backup/backup-server.py) und [`backup_config.ini`](services/backup/backup_config.ini).
 * **Cronjob-tauglich**: Für die automatisierte, unbeaufsichtigte Ausführung im Hintergrund konzipiert.
-* **Discord-Benachrichtigungen**: Sendet Statusberichte bei Erfolg oder detaillierte Fehlermeldungen bei Problemen via Webhook ([discord_notifier.py](services/backup/discord_notifier.py)).
-* **Wiederherstellung**: Einfache Rekonstruktion gesicherter Zustände über [restore-server.py](services/backup/restore-server.py).
+* **Discord-Benachrichtigungen**: Sendet Statusberichte bei Erfolg oder detaillierte Fehlermeldungen bei Problemen via Webhook ([`discord_notifier.py`](services/backup/discord_notifier.py)).
+* **Wiederherstellung**: Einfache Rekonstruktion gesicherter Zustände über [`restore-server.py`](services/backup/restore-server.py).
 
 Beispiel für die Crontab (`crontab -e`):
 ```text
-0 3 * * * /usr/bin/python3 /pfad/zu/linux-toolbox/services/backup/backup-server.py >> ~/Bkup/cron_output.log 2>&1
+0 3 * * * /usr/bin/python3 /pfad/zu/toolbox/services/backup/backup-server.py >> ~/Bkup/cron_output.log 2>&1
 ```
-### KDE Wallpaper Changer (`services/wallpaper/`)
+
+<a id="kde-wallpaper-changer-serviceswallpaper"></a>
+### KDE Wallpaper Changer ([`services/wallpaper/`](services/wallpaper/))
 
 Tageszeitabhängiger Wallpaper-Wechsler für KDE Plasma 6 basierend auf dem realen Sonnenstand:
 * **Auf Prozessebene ein Daemon**: [`wallpaper_changer.py`](services/wallpaper/wallpaper_changer.py) läuft im Dauerbetrieb als Hintergrund-Daemon mit 5-Minuten-Prüfschleife, berechnet Sonnenauf- und -untergang (NOAA-Algorithmus, Zero-Dependencies) und reagiert sauber auf Prozess-Signale.
@@ -147,6 +157,9 @@ Tageszeitabhängiger Wallpaper-Wechsler für KDE Plasma 6 basierend auf dem real
 
 ---
 
+<a id="dokumentation-docs"></a>
 ## Dokumentation (`docs/`)
 
 - [docs/ANLEITUNG_APP_INSTALLER.md](docs/ANLEITUNG_APP_INSTALLER.md): Ausführliches Handbuch mit allen Parametern, Syntaxregeln für `.applist`-Dateien und Konfigurationsoptionen (`~/.applists/apps.config`).
+- [docs/JOURNAL.md](docs/JOURNAL.md): Kontinuierliches Projekt-Journal mit Architekturentscheidungen und Änderungsverlauf.
+

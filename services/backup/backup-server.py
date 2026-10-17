@@ -4,7 +4,7 @@
 # Zweck: Automatisierte, konsistente Sicherung der Anwendungsdaten und Container
 #
 # Einrichtung als Cronjob (crontab -e):
-# 0 3 * * * /usr/bin/python3 /pfad/zu/linux-toolbox/services/backup/backup-server.py >> ~/Bkup/cron_output.log 2>&1
+# 0 3 * * * /usr/bin/python3 /pfad/zu/toolbox/services/backup/backup-server.py >> ~/Bkup/cron_output.log 2>&1
 # ==============================================================================
 
 import subprocess

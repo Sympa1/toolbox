@@ -3,6 +3,16 @@
 Dieses Dokument dient als kontinuierliches Gedächtnis des Projekts. 
 Hier werden fundamentale Architekturentscheidungen, erreichte Meilensteine und offene Punkte chronologisch (neueste Einträge oben) dokumentiert.
 
+### 2026-10-17 - Korrektur aller Markdown-Links (README & Dokumentation) und Wiederherstellung von AppImageMover
+- **Entscheidung / Änderung:**
+  1. **Link-Korrekturen (`README.md` & `docs/ANLEITUNG_APP_INSTALLER.md`):**
+     - Verweise auf nicht mehr existierende Beispieldateien (`sample.applist`, `sample_desktop_arch.applist`) entfernt und durch `workstation.applist` ersetzt.
+     - Inhaltsverzeichnis-Sprungmarken (`#...`) in `README.md` und `docs/ANLEITUNG_APP_INSTALLER.md` korrigiert und mit expliziten `<a id="..."></a>`-Ankern für volle Kompatibilität auf GitHub und lokalen Markdown-Readern versehen.
+     - Alle Modul- und Skript-Nennungen in `README.md` mit direkten, klickbaren Datei-Links versehen.
+  2. **Modul-Wiederherstellung (`cli/appimage_mover.py`) & Pfad-Vereinheitlichung:**
+     - Versehentlich entfallenes Modul `cli/appimage_mover.py` gemäß `AGENTS.md`-Richtlinien (OOP-Kapselung `AppImageMover`, Typ-Präfixe `sBuffy`/`iBuffy`, deutsche Kommentare) wiederhergestellt.
+     - Repository-Verweise durchgängig von `linux-toolbox` auf `toolbox` vereinheitlicht.
+
 ### 2026-10-17 - Anpassung von AGENTS.md nach Vorbild von whisper_pill (ohne Projektziel)
 - **Entscheidung / Änderung:**
   - `AGENTS.md`: Struktur und Formulierungen eng an die Vorlage aus `whisper_pill` angeglichen und auf das Repository `toolbox` angepasst.
