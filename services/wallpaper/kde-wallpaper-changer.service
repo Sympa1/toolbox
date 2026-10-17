@@ -1,0 +1,16 @@
+[Unit]
+Description=KDE Plasma Wallpaper Changer (Daemon als systemd-Benutzerdienst via Sonnenstand)
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+WorkingDirectory=/pfad/zum/repository/services/wallpaper
+ExecStart=/usr/bin/python3 /pfad/zum/repository/services/wallpaper/wallpaper_changer.py
+Restart=on-failure
+RestartSec=10s
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=graphical-session.target

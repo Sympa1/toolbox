@@ -1,0 +1,23 @@
+# ==============================================================================
+# Beispieldatei fuer Softwarepakete (sample.applist)
+# ==============================================================================
+# HINWEIS ZUR PAKETMANAGER-AUSWAHL:
+# - type=pacman : Installiert Pakete explizit ueber 'sudo pacman' (offizielle Arch-Repos)
+# - type=yay    : Installiert Pakete explizit ueber den AUR-Helper 'yay' (auch AUR)
+# - type=system : Erkennt automatisch den nativen Paketmanager der Distribution
+#                 (unter Arch/Manjaro automatisch yay/paru falls vorhanden, sonst pacman)
+# - type=flatpak: Installiert isolierte Flatpaks von Flathub
+# ==============================================================================
+
+# 1. Systempakete
+# Hier als pacman definiert (alternativ kann auch type=system oder type=yay verwendet werden)
+type=pacman
+firefox;Webbrowser von Mozilla
+cmake;Cross-Platform Build-System und Generator
+gimp;GNU Image Manipulation Program (Bildbearbeitung)
+filezilla;Grafischer FTP-, FTPS- und SFTP-Client
+
+# 2. Flatpak-Anwendungen (werden isoliert ueber Flatpak / Flathub installiert)
+type=flatpak
+com.brave.Browser;Brave Privatsphaere-Webbrowser
+org.mozilla.Thunderbird;Thunderbird E-Mail- und Kalender-Client
